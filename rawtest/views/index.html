@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <title>Chatbot</title>
+
+      <link rel="stylesheet" href="style.css" />
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+      <script defer src="../face-api.min.js"></script>
+      <script type="text/javascript" defer src="../index.js"></script>
+  </head>
+  <body>
+    <video id="video" width="720" height="560" autoplay muted></video>
+    <button id="reset" onClick="window.location.reload();">Reset Conversation</button>
+    <button id="record">Speak</button>
+    <button id="stop-record">Stop Recording</button>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" async></script>
+
+      <div id="main">
+        <div><input id="input" type="text" placeholder="Say something..." autocomplete="off"/></div>
+      </div>
+
+
+
+  </body>
+</html>

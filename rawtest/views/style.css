@@ -1,0 +1,60 @@
+body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    color: #421;
+    font-weight: bold;
+    font-size: 18px;
+    font-family: "Courier New";
+    background: rgb(200, 232, 241);
+}
+
+canvas {
+  position: absolute;
+}
+
+body::after {
+    content: "";
+    background-image: url("../sources/bot.png");
+    background-repeat: repeat-y;
+    opacity: 0.5;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;
+  }
+span {
+    color: rgb(36, 17, 119);
+}
+::-webkit-input-placeholder {
+    color: #711
+}
+#main {
+    position: fixed;
+    top: 5%;
+    right: 600px;
+    width: 400px;
+    border: 0px solid #421;
+    padding: 40px;
+}
+#main div {
+    margin: 10px;
+}
+#input {
+    width: 100%;
+    border: 2px solid #aaa;
+    border-radius: 4px;
+    margin: 8px 0;
+    outline: none;
+    padding: 8px;
+    box-sizing: border-box;
+    transition: .3s;
+}
+
+#input:focus{
+  border-color: dodgerBlue;
+  box-shadow: 0 0 8px 0 dodgerBlue;
+}

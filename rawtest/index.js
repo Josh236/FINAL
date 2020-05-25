@@ -1,16 +1,52 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const inputField = document.getElementById("input")
-  inputField.addEventListener("keydown", function(e) {
-    if (e.code === "Enter") {
-        let input = document.getElementById("input").value;
-        //document.getElementById("user").innerHTML = input;
-        inputField.value = "";
-        //console.log(`Typed: '${input}'`)
-        output(input);
-    }
-  });
-});
+const video = document.getElementById('video');
+//const faceapi = require('face-api');
 
+
+Promise.all([
+  faceapi.nets.tinyFaceDetector.loadFromUri('/sources'),
+  faceapi.nets.faceLandmark68Net.loadFromUri('/sources'),
+  faceapi.nets.faceRecognitionNet.loadFromUri('/sources'),
+  faceapi.nets.faceExpressionNet.loadFromUri('/sources')
+]).then(startVideo)
+
+
+function startVideo(){
+  navigator.mediaDevices.getUserMedia(
+    { video: {} },
+    stream => {
+      video.srcObject = stream
+    },
+    err => console.error(err)
+  )
+}
+startVideo();
+
+const recordbtn = document.querySelector('#record');
+const stopbtn = document.querySelector('#stop-record');
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+const recognition = new SpeechRecognition();
+
+recognition.lang = 'en-US';
+recognition.interminResults = false;
+
+recognition.onresult = function(event) {
+  const recog = event.results[0][0].transcript;
+  console.log(recog);
+  document.getElementById('input').value = recog;
+}
+
+recordbtn.addEventListener('click', function(e) {
+  recognition.start();
+  console.log('Listening');
+})
+
+stopbtn.addEventListener('click', () => {
+  recognition.stop();
+  console.log('Listening stopped');
+})
+
+
+//trigger or recog
 const trigger = [
   //0
   ["hi", "hey", "hello"],
@@ -27,29 +63,37 @@ const trigger = [
   //6
   ["thanks", "thank you"],
   //7
+  ["what is your name", "what are you called"],
+  //8
   ["bye", "good bye", "goodbye"]
+
+
 ];
 
 const reply =[
   //0
-  ["Hello", "Hi!", "Hey", "Hi there"],
+  ["Hello", "Hi", "Hey", "Hi there", "Greetings"],
   //1
   [ "Fine, how are you?",
     "Pretty well, how are you?",
     "Good, what about yourself?"
   ],
   //2
-  ["Nothing much", "Some exciting things!"],
+  ["I'm here talking", "Just watching you", "I'm talking with many people"],
   //3
-  ["Glad to hear it"],
+  ["Good to hear", "How so?"],
   //4
-  ["Why?", "Please cheer up"],
+  ["That is unfortunate", "How so?"],
   //5
   ["What about?", "Once upon a time.."],
   //6
   ["You're welcome", "No Problem"],
   //7
-  ["Goodbye", "I'll see you later"],
+  ["My name is Watcher", "Yours first"],
+  //8
+  ["Goodbye", "I'll see you later"]
+
+
 ];
 
 const alternative = [
@@ -59,7 +103,18 @@ const alternative = [
   "I'm listening...",
 ];
 
-function output(input) {
+document.addEventListener("DOMContentLoaded", () => {
+  const inputField = document.getElementById("input")
+  inputField.addEventListener("keydown", function(e) {
+    if (e.code === "Enter") {
+      let input = inputField.value;
+      inputField.value = "";
+      output(input);
+    }
+  });
+});
+
+function output(input) { //recog here
   let product;
   let text = input.toLowerCase().replace(/[^\w\s\d]/gi, "");
 
@@ -84,20 +139,19 @@ function addChat(input, product) {
   const mainDiv = document.getElementById("main");
   let userDiv = document.createElement("div");
   userDiv.id = "user";
-  userDiv.innerHTML = `You: <span id=user-response">${input}</span>`;
+  userDiv.innerHTML = `You: <span id="user-response">${input}</span>`;
   mainDiv.appendChild(userDiv);
 
   let botDiv = document.createElement("div");
   botDiv.id = "bot";
   botDiv.innerHTML = `Chatbot: <span id="bot-response">${product}</span>`;
   mainDiv.appendChild(botDiv);
-  speak(product);
 }
 
 function compare(triggerArray, replyArray, text){
   let item;
   for (let x = 0; x < triggerArray.length; x++){
-    for (let y = 0; y < replyArray.length; y++){
+    for (let y = 0; y < triggerArray.length; y++){
       if (triggerArray[x][y] == text){
         items  = replyArray[x];
         item = items[Math.floor(Math.random() * items.length)];

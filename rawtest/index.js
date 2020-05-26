@@ -1,24 +1,20 @@
-const video = document.getElementById('video');
-//const faceapi = require('face-api');
+const video = document.getElementById("#video");
 
+// Promise.all([
+//   faceapi.nets.tinyFaceDetector.loadFromUri('/sources'),
+//   faceapi.nets.faceLandmark68Net.loadFromUri('/sources'),
+//   faceapi.nets.faceRecognitionNet.loadFromUri('/sources'),
+//   faceapi.nets.faceExpressionNet.loadFromUri('/sources')
+// ]).then(startVideo)
 
-Promise.all([
-  faceapi.nets.tinyFaceDetector.loadFromUri('/sources'),
-  faceapi.nets.faceLandmark68Net.loadFromUri('/sources'),
-  faceapi.nets.faceRecognitionNet.loadFromUri('/sources'),
-  faceapi.nets.faceExpressionNet.loadFromUri('/sources')
-]).then(startVideo)
-
-
-function startVideo(){
-  navigator.mediaDevices.getUserMedia(
-    { video: {} },
-    stream => {
-      video.srcObject = stream
-    },
+function startVideo() {
+  navigator.getUserMedia(
+    {video: {} },
+    stream => (video.srcObject = stream),
     err => console.error(err)
   )
 }
+
 startVideo();
 
 const recordbtn = document.querySelector('#record');

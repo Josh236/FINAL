@@ -1,18 +1,11 @@
-const video = document.getElementById("#video");
-
-// Promise.all([
-//   faceapi.nets.tinyFaceDetector.loadFromUri('/sources'),
-//   faceapi.nets.faceLandmark68Net.loadFromUri('/sources'),
-//   faceapi.nets.faceRecognitionNet.loadFromUri('/sources'),
-//   faceapi.nets.faceExpressionNet.loadFromUri('/sources')
-// ]).then(startVideo)
+const video = document.getElementById("video");
 
 function startVideo() {
   navigator.getUserMedia(
     {video: {} },
     stream => (video.srcObject = stream),
     err => console.error(err)
-  )
+  );
 }
 
 startVideo();

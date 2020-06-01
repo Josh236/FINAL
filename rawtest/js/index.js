@@ -1,4 +1,5 @@
 const video = document.getElementById("video");
+let predAges = [];
 
 Promise.all([
   faceapi.nets.tinyFaceDetector.loadFromUri("../models"),
@@ -22,16 +23,59 @@ video.addEventListener('play', () => {
   container.append(canvas)
   const displaySize = {width: video.width, height: video.height}
   faceapi.matchDimensions(canvas, displaySize)
-  setInterval(async () => {
-    const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions()
-    const resizedDetections = faceapi.resizeResults(detections, displaySize)
-    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
-    faceapi.draw.drawDetections(canvas, resizedDetections)
-    faceapi.draw.drawFaceLandmarks(canvas, resizedDetections)
-    console.log(detections)
-  }, 200)
-})
 
+  setInterval(async () => {
+    const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions().withAgeAndGender();
+    const resizedDetections = faceapi.resizeResults(detections, displaySize);
+    // const age = resizedDetections[0].age;
+    // const interpolatedAge = interpolateAgePredictions(age);
+
+    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
+    faceapi.draw.drawDetections(canvas, resizedDetections);
+    faceapi.draw.drawFaceLandmarks(canvas, resizedDetections);
+    faceapi.draw.drawFaceExpressions(canvas, resizedDetections);
+
+
+
+    // const bottomRight = {
+    //   x: resizedDetections[0].detection.box.bottomRight.x - 50,
+    //   y: resizedDetections[0].detection.box.bottomRight.y
+    // };
+
+    // new faceapi.draw.DrawTextField(
+    //   [`${faceapi.utils.round(interpolatedAge, 0)} years`],
+    //   bottomRight
+    // ).draw(canvas);
+    console.log(resizedDetections);
+  }, 100);
+});
+
+function interpolateAgePredictions(age) {
+  predAges = [age].concat(predAges).slice(0, 30);
+  const avgPredAge =
+    predAges.reduce((total, a) => total + a) / predAges.length;
+  return avgPredAge;
+}
+
+//     const age = resizedDetections[0].age;
+//     const interpolatedAge = interpolatedAgePredictions(age);
+//     const bottomRight = {
+//       x: resizedDetections[0].detection.box.bottomRight.x -50,
+//       y: resizedDetections[0].detection.box.bottomRight.y
+//     };
+
+//     new faceapi.draw.DrawTextField(
+//       [`${faceapi.utils.round(interpolatedAge, 0)}`], bottomRight
+//     ).draw(canvas);
+//     console.log(resizedDetections)
+//   }, 200)
+// })
+
+// function interpolatedAgePredictions(age) {
+//   predAge = [age].concat(predAge).slice(0, 30);
+//   const avgPredAge = predAge.reduce((total, a) => total +a) / predAge.length;
+//   return avgPredAge;
+// }
 
 const recordbtn = document.querySelector('#record');
 const stopbtn = document.querySelector('#stop-record');
@@ -52,16 +96,11 @@ recordbtn.addEventListener('click', function(e) {
   console.log('Listening');
 })
 
-stopbtn.addEventListener('click', () => {
-  recognition.stop();
-  console.log('Listening stopped');
-})
-
 
 //trigger on recog
 const trigger = [
   //0
-  ["hi", "hey", "hello"],
+  ["hi", "hey", "hello", "hi there", "greetings", "heyo"],
   //1
   ["how are you", "how are things"],
   //2
@@ -81,7 +120,7 @@ const trigger = [
   //9
   ["what do you do in your free time", "do you have any hobbies"],
   //10
-  ["fuck", "shit", "asshole"],
+  ["fuck", "shit", "asshole", "fuck you"],
   //11
   ["do you know me", "what do you know about me", "what information do you know about me"],
   //12
@@ -91,13 +130,13 @@ const trigger = [
   //14
   ["bad", "bored", "tired", "sad"],
   //15
-  ["tell me story", "tell me joke"],
+  ["tell me joke", "do you know any jokes"],
   //16
   ["how old are you", "what is your age", "how long have you been alive", "how long have you been operating"],
   //17
   ["are you alive", "do you feel alive", "do you think you're alive"],
   //18
-  ["do you have hands"],
+  ["do you have hands", "do you have limbs"],
   //19
   ["are you happy", "are you happy with your life", "are you content"],
   //20
@@ -109,7 +148,7 @@ const trigger = [
   //23
   ["what is your star sign", "do you have a star sign"],
   //24
-  ["what is better cats or dogs"],
+  ["what is better cats or dogs", "cats or dogs", "are you a dog person or cat person"],
   //25
   ["do you like animals", "what do you think of animals"],
   //26
@@ -119,7 +158,7 @@ const trigger = [
   //28
   ["thanks", "thank you"],
   //29
-  ["what is your name", "what are you called"],
+  ["what is your name", "what are you called", "what should i call you"],
   //30
   ["your purpose is to pass butter", "your purpose is to pass the butter"],
   //31
@@ -132,10 +171,7 @@ const reply =[
   //0
   ["Hello", "Hi", "Hey", "Hi there", "Greetings", "What is my purpose?"],
   //1
-  [ "Fine, how are you?",
-    "Pretty well, how are you?",
-    "Good, what about yourself?"
-  ],
+  [ "Fine, how are you?", "Pretty well, how are you?", "Good, what about yourself?"],
   //2
   ["I'm here talking", "Just watching you", "I'm talking with many people"],
   //3
@@ -191,7 +227,7 @@ const reply =[
   //28
   ["You are welcome."],
   //29
-  ["My name is Isla, pronouned: Eye-Lah", "I am Isla."],
+  ["My name is Isla, pronouned: Eye-Lah", "I am Isla.", "I am: Interactive System and Language Analysis, ISLA."],
   //30
   ["Nooooooo."],
   //31

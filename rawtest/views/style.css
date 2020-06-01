@@ -1,5 +1,6 @@
 
 
+
 body {
     margin: 0;
     padding: 0;
@@ -7,46 +8,93 @@ body {
     font-weight: bold;
     font-size: 18px;
     font-family: "Courier New";
-    background: rgb(200, 232, 241);
+    background: rgb(187, 187, 187);
 }
 
-
-/* body::after {
-    content: "";
-    background-image: url("../sources/bot.png");
-    background-repeat: repeat-y;
-    opacity: 0.5;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    position: absolute;
-    z-index: -1;
-  } */
-/* span {
-    color: rgb(36, 17, 119);
+#title {
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  display: flex;
+  width: 100%;
+  position: center;
+  font-family: "Raleway", Arial, sans-serif;
+  font-size: 25px;
+  color: white;
+  background-color: black;
+  justify-content: center;
+  padding: 20px;
+  letter-spacing: 10px;
 }
-::-webkit-input-placeholder {
-    color: #711
-} */
 
 canvas {
   position: absolute;
 }
 
 #container{
+  position: absolute;
   margin: 0;
-  padding: 0;
-  width: 100%;
+  left: -50px;
+  bottom: 12%;
+  padding: 8px;
   display: flex;
+  width: 1080px;
+  height: 720px;
+}
+
+#buttons {
+  position: fixed;
+  top: 5%;
+  right: 300px;
+  width: 400px;
+}
+
+#record {
+  position: fixed;
   justify-content: center;
-  align-items: center;
+  top: 9.5%;
+  right: 180px;
+  width: 75px;
+  border: 2px solid #aaa;
+  border-radius: 4px;
+  margin: 8px 0;
+  outline: none;
+  padding: 8px;
+  box-sizing: border-box;
+  transition: .3s;
+  display: flex;
+}
+
+#record:focus {
+  border-color: dodgerblue;
+  box-shadow: 0 0 8px 0 dodgerblue;
+}
+
+#reset {
+  position: fixed;
+  justify-content: center;
+  top: 9.5%;
+  right: 100px;
+  width: 75px;
+  border: 2px solid #aaa;
+  border-radius: 4px;
+  margin: 8px 0;
+  outline: none;
+  padding: 8px;
+  box-sizing: border-box;
+  transition: .3s;
+  display: flex;
+}
+
+#reset:focus {
+  border-color: dodgerblue;
+  box-shadow: 0 0 8px 0 dodgerblue;
 }
 
 #main {
     position: fixed;
     top: 5%;
-    right: 600px;
+    right: 400px;
     width: 400px;
     border: 0px solid #421;
     padding: 40px;
@@ -55,7 +103,7 @@ canvas {
     margin: 10px;
 }
 #input {
-    width: 100%;
+    width: 150%;
     border: 2px solid #aaa;
     border-radius: 4px;
     margin: 8px 0;
@@ -63,6 +111,7 @@ canvas {
     padding: 8px;
     box-sizing: border-box;
     transition: .3s;
+    display: flex;
 }
 
 #input:focus{

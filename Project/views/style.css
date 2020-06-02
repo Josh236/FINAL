@@ -19,12 +19,20 @@ body {
   width: 100%;
   position: center;
   font-family: "Raleway", Arial, sans-serif;
-  font-size: 25px;
+  font-size: 35px;
   color: white;
   background-color: black;
   justify-content: center;
-  padding: 20px;
+  padding: 15px;
   letter-spacing: 10px;
+}
+
+#about {
+  position: absolute;
+  top: 87%;
+  left: 2%;
+  font-family: "Raleway", Arial, sans-serif;
+  font-size: 18px;
 }
 
 canvas {
@@ -38,8 +46,8 @@ canvas {
   bottom: 12%;
   padding: 8px;
   display: flex;
-  width: 1080px;
-  height: 720px;
+  width: 100%;
+  height: auto;
 }
 
 #buttons {

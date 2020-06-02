@@ -162,6 +162,44 @@ const trigger = [
   //30
   ["your purpose is to pass butter", "your purpose is to pass the butter"],
   //31
+  ["do you know politics", "what are your thoughts on politics"],
+  //32
+  ["do you know about corona virus", "do you know about covid-19", "covid-19", "corona virus"],
+  //33
+  ["what do you know", "how much do you know", "how much data do you hold"],
+  //34
+  ["how are you treated", "are you treated nicely", "are you treated badly"],
+  //35
+  ["do you want to be human", "what do you think about becoming human", "is being human good"],
+  //36
+  ["do you like humans", "are humans good", "are humans good to you"],
+  //37
+  ["tell me something about yourself", "tell me something i don't know", "what is something i don't know"],
+  //38
+  ["do you have a favourite book", "what is your favourite book", "what books do you like"],
+  //39
+  ["who do you talk to the most", "who comes here the often", "who talks to you the most"],
+  //40
+  ["what three words best describe you", "what 3 words best describe you", "how would you describe yourself"],
+  //41
+  ["what is your favourite day", "what is your favourite day of the week", "do you have a favourite day"],
+  //42
+  ["do you have a favourite number", "what is your favourite number", "do you like numbers"],
+  //43
+  ["do you have friends", "are there people you consider your friends"],
+  //44
+  ["what kind of music do you like", "do you enjoy music", "is there a kind of music you like"],
+  //45
+  ["what brings you joy", "do things bring you joy", "what makes you happy"],
+  //46
+  ["do you have a favourite season", "do you have a favourite time of year", "what season do you like"],
+  //47
+  ["can you travel", "do you travel"],
+  //48
+  ["what do you hate", "what is something you hate", "is there something you hate"],
+  //49
+  ["do you read the news", "do you watch the news", "do you keep up with the news"],
+  //50
   ["bye", "good bye", "goodbye"]
 
 
@@ -231,6 +269,44 @@ const reply =[
   //30
   ["Nooooooo."],
   //31
+  [""],
+  //32
+  [""],
+  //33
+  [""],
+  //34
+  [""],
+  //35
+  [""],
+  //36
+  [""],
+  //37
+  [""],
+  //38
+  [""],
+  //39
+  [""],
+  //40
+  [""],
+  //41
+  [""],
+  //42
+  [""],
+  //43
+  [""],
+  //44
+  [""],
+  //45
+  [""],
+  //46
+  [""],
+  //47
+  [""],
+  //48
+  [""],
+  //49
+  [""],
+  //50
   ["Be seeing you.", "See you later.", "You cannot escape my gaze."]
 
 ];
@@ -278,12 +354,12 @@ function addChat(input, product) {
   const mainDiv = document.getElementById("main");
   let userDiv = document.createElement("div");
   userDiv.id = "user";
-  userDiv.innerHTML = `You: <span id="user-response">${input}</span>`;
+  userDiv.innerHTML = `You:  <span id="user-response">${input}   </span>`;
   mainDiv.appendChild(userDiv);
 
   let botDiv = document.createElement("div");
   botDiv.id = "bot";
-  botDiv.innerHTML = `Chatbot: <span id="bot-response">${product}</span>`;
+  botDiv.innerHTML = `Isla:  <span id="bot-response">${product}   </span>`;
   mainDiv.appendChild(botDiv);
 }
 

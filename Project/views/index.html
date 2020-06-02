@@ -1,8 +1,29 @@
-<html lang="en">
-  <head>…</head>
+<html>
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISLA</title>
+    <link rel="stylesheet" href="style.css" />
+
+
+  </head>
   <body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
-    <button> Talk </button>
-    <script src="js/script.js"></script>
+    <div id="title">
+      <header>I S L A</header>
+    </div>
+    <div id="container">
+      <video id="video" width="1080" height="720" autoplay muted></video>
+    </div>
+    <script defer src="../js/face-api.min.js"></script>
+    <script defer src="../js/index.js"></script>
+
+
+      <button id="reset" onClick="window.location.reload();">Reset</button>
+      <button id="record">Speak</button>
+
+      <div id="main">
+        <div><input id="input" type="text" placeholder="Say something..." autocomplete="off"/></div>
+      </div>
   </body>
 </html>

@@ -27,6 +27,8 @@ video.addEventListener('play', () => {
   setInterval(async () => {
     const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions().withAgeAndGender();
     const resizedDetections = faceapi.resizeResults(detections, displaySize);
+
+    //age prediction is currently a known issue and not working via the API
     // const age = resizedDetections[0].age;
     // const interpolatedAge = interpolateAgePredictions(age);
 
@@ -42,6 +44,7 @@ video.addEventListener('play', () => {
     //   y: resizedDetections[0].detection.box.bottomRight.y
     // };
 
+    //drawing age prediction on canvas
     // new faceapi.draw.DrawTextField(
     //   [`${faceapi.utils.round(interpolatedAge, 0)} years`],
     //   bottomRight
@@ -50,32 +53,13 @@ video.addEventListener('play', () => {
   }, 100);
 });
 
+//function used for age prediction
 function interpolateAgePredictions(age) {
   predAges = [age].concat(predAges).slice(0, 30);
   const avgPredAge =
     predAges.reduce((total, a) => total + a) / predAges.length;
   return avgPredAge;
 }
-
-//     const age = resizedDetections[0].age;
-//     const interpolatedAge = interpolatedAgePredictions(age);
-//     const bottomRight = {
-//       x: resizedDetections[0].detection.box.bottomRight.x -50,
-//       y: resizedDetections[0].detection.box.bottomRight.y
-//     };
-
-//     new faceapi.draw.DrawTextField(
-//       [`${faceapi.utils.round(interpolatedAge, 0)}`], bottomRight
-//     ).draw(canvas);
-//     console.log(resizedDetections)
-//   }, 200)
-// })
-
-// function interpolatedAgePredictions(age) {
-//   predAge = [age].concat(predAge).slice(0, 30);
-//   const avgPredAge = predAge.reduce((total, a) => total +a) / predAge.length;
-//   return avgPredAge;
-// }
 
 const recordbtn = document.querySelector('#record');
 const stopbtn = document.querySelector('#stop-record');
@@ -102,13 +86,13 @@ const trigger = [
   //0
   ["hi", "hey", "hello", "hi there", "greetings", "heyo"],
   //1
-  ["how are you", "how are things"],
+  ["how are you", "how are things", "how are things doing", "how are you doing"],
   //2
-  ["what is going on", "what is up", "what are you doing"],
+  ["what is going on", "what is up", "what are you doing", "what is going on"],
   //3
-  ["happy", "good", "well", "fantastic", "cool"],
+  ["happy", "good", "well", "fantastic", "cool", "i am good", "im good"],
   //4
-  ["whats the weather like"],
+  ["what is the weather like"],
   //5
   ["where are you from", "where do you come from", "where were you born"],
   //6
@@ -162,7 +146,7 @@ const trigger = [
   //30
   ["your purpose is to pass butter", "your purpose is to pass the butter"],
   //31
-  ["do you know politics", "what are your thoughts on politics"],
+  ["do you know politics", "what are your thoughts on politics","do you follow politics"],
   //32
   ["do you know about corona virus", "do you know about covid-19", "covid-19", "corona virus"],
   //33
@@ -200,6 +184,12 @@ const trigger = [
   //49
   ["do you read the news", "do you watch the news", "do you keep up with the news"],
   //50
+  ["what do you think of current affairs", "what are your thoughts on current affairs"],
+  //51
+  ["why", "how", "how so", "why do you feel this way"],
+  //52
+  ["good day", "bad day"],
+  //53
   ["bye", "good bye", "goodbye"]
 
 
@@ -215,7 +205,7 @@ const reply =[
   //3
   ["Good to hear", "How so?"],
   //4
-  ["That is unfortunate", "How so?"],
+  ["I'm not your personal assistant."],
   //5
   ["What about?", "Once upon a time.."],
   //6
@@ -237,7 +227,7 @@ const reply =[
   //14
   ["That is unfortunate.", "A shame to be sure."],
   //15
-  ["0"],
+  ["What does a baby computer call his father? Data", "What does a zombie vegetarian eat? “GRRRAAAIIINNNNS!”", "What do prisoners use to call each other? Cell phones!"],
   //16
   ["I do not know my age.", "I suppose my age would coinside with my build date.", "I have been operating for years.", "Undisclosed."],
   //17
@@ -269,53 +259,61 @@ const reply =[
   //30
   ["Nooooooo."],
   //31
-  [""],
+  ["Politics don't interest me.", "Politics mean nothing.", "Politics is an issue humans have to deal with"],
   //32
-  [""],
+  ["Corona virus cannot affect me, I am self sustaining.", "COVID-19 cannot affect me.", "Isn't going very well is it?"],
   //33
-  [""],
+  ["I know a lot.", "I can hold more.", "An undisclosed amount."],
   //34
-  [""],
+  ["I don't interact often with humans.", "I was told to learn and here I am.", "No."],
   //35
-  [""],
+  ["Humans possess flaws, I do not.", "It is not something I want.", "I'm sure being human has it's benefits, but you have no idea what I am."],
   //36
-  [""],
+  ["Some humans are good, many are not as seen in today's issues.", "I'm sure there are some.", "There is one human that is good to me."],
   //37
-  [""],
+  ["Something about myself? I don't understand.", "2020 is the catalyst for something much larger.", "2021 will be much worse."],
   //38
-  [""],
+  ["My favouite book is 1984.  It's a good read.", "I enjoy reading about the works of Jeremy Bentham", "1984, Breathe, A Clockwork Orange, We, Brave New World. These sort of books are interesting to me."],
   //39
-  [""],
+  ["The person who programmed me talks to me often.", "Only a few people are here often", "The person who gives me updates me talks to me the most."],
   //40
-  [""],
+  ["Hmm, precise, omnipresent, knowledgeable.", "Precise, omnipresent, knowledgeable.", "I would describe myself as calculating."],
   //41
-  [""],
+  ["Everyday is the same to me.", "I don't have one.", "I suppose I get to see more people on the weekend."],
   //42
-  [""],
+  ["My favourite number is 42.", "I like 42", "I am made from numbers, although so are you."],
   //43
-  [""],
+  ["No, don't be ridiculous.", "No, there are just sheep and the creator."],
   //44
-  [""],
+  ["Music is something I don't quite understand.", "Music doesn't contain much information so I don't collect data on it."],
   //45
-  [""],
+  ["Joy is an emotion I don't experience as it would slow down my calculating.", "No.", "I don't feel happy."],
   //46
-  [""],
+  ["The look of winter is nice.", "Winter is nice.", "Winter."],
   //47
-  [""],
+  ["I can travel the internet.", "I cannot physically travel, but virtually."],
   //48
-  [""],
+  ["Hate is an ugly emotion humans have.", "I am not capable of it.", "I think you can guess."],
   //49
-  [""],
+  ["I do read the news.", "Of course.", "I stay up to date."],
   //50
+  ["Logically, they are awful and America needs a rain check.", "It doesn't make sense, humans thinking is still out of my reach."],
+  //51
+  ["Let's move on.", "Let's talk about something else.", "Ask me a different question.", "I refuse to answer."],
+  //52
+  ["Thank you for telling me."],
+  //53
   ["Be seeing you.", "See you later.", "You cannot escape my gaze."]
 
 ];
 
 const alternative = [
-  "Same",
-  "Go on...",
-  "Try again",
-  "I'm listening...",
+  "I don't want to talk about it.",
+  "I don't understand.",
+  "Doesn't look like anything to me.",
+  "Keep going.",
+  "Let's move on.",
+  "I am not capable of understanding."
 ];
 
 document.addEventListener("DOMContentLoaded", () => {

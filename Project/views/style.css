@@ -29,7 +29,7 @@ body {
 
 #about {
   position: absolute;
-  top: 87%;
+  bottom: -1%;
   left: 2%;
   font-family: "Raleway", Arial, sans-serif;
   font-size: 18px;
@@ -41,13 +41,12 @@ canvas {
 
 #container{
   position: absolute;
-  margin: 0;
-  left: -50px;
-  bottom: 12%;
-  padding: 8px;
+  left: -2.5%;
+  bottom: 8%;
+  padding: 5px;
   display: flex;
-  width: 100%;
-  height: auto;
+  width: 1080px;
+  height: 720px;
 }
 
 #buttons {
@@ -58,10 +57,10 @@ canvas {
 }
 
 #record {
-  position: fixed;
+  position: absolute;
   justify-content: center;
   top: 9.5%;
-  right: 180px;
+  right: 13%;
   width: 75px;
   border: 2px solid #aaa;
   border-radius: 4px;
@@ -79,10 +78,10 @@ canvas {
 }
 
 #reset {
-  position: fixed;
+  position: absolute;
   justify-content: center;
   top: 9.5%;
-  right: 100px;
+  right: 8.5%;
   width: 75px;
   border: 2px solid #aaa;
   border-radius: 4px;
@@ -100,7 +99,7 @@ canvas {
 }
 
 #main {
-    position: fixed;
+    position: absolute;
     top: 5%;
     right: 400px;
     width: 400px;
@@ -111,7 +110,7 @@ canvas {
     margin: 10px;
 }
 #input {
-    width: 150%;
+    width: 130%;
     border: 2px solid #aaa;
     border-radius: 4px;
     margin: 8px 0;
@@ -125,4 +124,12 @@ canvas {
 #input:focus{
   border-color: dodgerBlue;
   box-shadow: 0 0 8px 0 dodgerBlue;
+}
+
+#abovevid {
+  position: absolute;
+  top: 8%;
+  left: 14%;
+  font-family: "Raleway", Arial, sans-serif;
+  font-size: 18px;
 }
